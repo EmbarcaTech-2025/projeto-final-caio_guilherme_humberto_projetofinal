@@ -35,7 +35,8 @@ pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(projeto_final_embarcatech projeto_final_embarcatech.cpp )
+add_executable(projeto_final_embarcatech projeto_final_embarcatech.cpp src/mqtt_control.cpp
+)
 
 add_library(driver STATIC
     driver/pwm.cpp
@@ -63,6 +64,7 @@ target_link_libraries(projeto_final_embarcatech
 # Add the standard include files to the build
 target_include_directories(projeto_final_embarcatech PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}
+        ${CMAKE_CURRENT_LIST_DIR}/include
 )
 
 target_include_directories(driver PUBLIC
@@ -77,7 +79,10 @@ target_include_directories(motors PUBLIC
 
 # Add any user requested libraries
 target_link_libraries(projeto_final_embarcatech 
-
+        pico_stdlib
+        pico_cyw43_arch_lwip_threadsafe_background
+        pico_lwip_mqtt
+        hardware_adc
         driver
         motors
     )

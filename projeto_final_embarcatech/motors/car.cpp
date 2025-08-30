@@ -161,4 +161,3 @@ void car::stop()
     this->motor_right.stop();
     this->motor_back.stop();
 }
-
