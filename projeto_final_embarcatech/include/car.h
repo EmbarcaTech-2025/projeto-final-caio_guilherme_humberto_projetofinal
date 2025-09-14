@@ -16,8 +16,8 @@ class car
     void configureCar();
     void moveForward(uint16_t speed, int16_t velAngularControl);
     void moveBackward(uint16_t speed, int16_t velAngularControl);
-    void moveLeft(uint16_t speed);
-    void moveRight(uint16_t speed);
+    void moveLeft(uint16_t speed, uint8_t direction);
+    void moveRight(uint16_t speed, uint8_t direction);
     void stop(); 
 };
 

@@ -41,7 +41,7 @@ void car::moveForward(uint16_t speed, int16_t velAngularControl)
     }
 
     // Garante que a velocidade final não ultrapasse o valor máximo do PWM (ex: 4095)
-    uint16_t max_pwm = 4095;
+    uint16_t max_pwm = 1020;
     if (speed_left_temp > max_pwm) {
         speed_left_temp = max_pwm;
     }
@@ -85,7 +85,7 @@ void car::moveBackward(uint16_t speed, int16_t velAngularControl)
     }
 
     // Garante que a velocidade final não ultrapasse o valor máximo do PWM (ex: 4095)
-    uint16_t max_pwm = 4095;
+    uint16_t max_pwm = 1020;
     if (speed_left_temp > max_pwm) {
         speed_left_temp = max_pwm;
     }
@@ -103,13 +103,14 @@ void car::moveBackward(uint16_t speed, int16_t velAngularControl)
     this->motor_back.setSpeedBackward(speed > max_pwm ? max_pwm : speed);
 }
 
+
 /**
  * @brief Gira o carro para a direita no próprio eixo (sentido horário).
  * @param speed A velocidade de rotação (0 a 4095).
  */
-void car::moveRight(uint16_t speed)
+void car::moveRight(uint16_t speed, uint8_t direction)
 {
-    uint16_t max_pwm = 4095;
+    uint16_t max_pwm = 1020;
 
     // Garante que a velocidade não ultrapasse o valor máximo
     if (speed > max_pwm) {
@@ -118,20 +119,24 @@ void car::moveRight(uint16_t speed)
 
     // Para girar para a direita, a roda esquerda vai para frente
     this->motor_left.setSpeedFoward(speed);
-    // e a roda direita vai para trás.
-    this->motor_right.setSpeedBackward(speed);
+    // e a roda direita vai para 
+    this->motor_right.stop();
     
-    // O motor de trás fica parado para permitir o giro.
-    this->motor_back.stop();
+    if(direction == 1){
+        this->motor_back.setSpeedFoward(800);
+        return;
+    }
+
+    this->motor_back.setSpeedBackward(800);
 }
 
 /**
  * @brief Gira o carro para a esquerda no próprio eixo (sentido anti-horário).
  * @param speed A velocidade de rotação (0 a 4095).
  */
-void car::moveLeft(uint16_t speed)
+void car::moveLeft(uint16_t speed,uint8_t direction)
 {
-    uint16_t max_pwm = 4095;
+    uint16_t max_pwm = 1020;
 
     // Garante que a velocidade não ultrapasse o valor máximo
     if (speed > max_pwm) {
@@ -139,12 +144,19 @@ void car::moveLeft(uint16_t speed)
     }
 
     // Para girar para a esquerda, a roda esquerda vai para trás
-    this->motor_left.setSpeedBackward(speed);
+    this->motor_left.stop();
     // e a roda direita vai para frente.
     this->motor_right.setSpeedFoward(speed);
 
     // O motor de trás fica parado para permitir o giro.
-    this->motor_back.stop();
+
+    if(direction == 1){
+        this->motor_back.setSpeedFoward(1000);
+        return;
+    }
+
+    this->motor_back.setSpeedBackward(1000);
+    
 }
 
 // Em car.cpp

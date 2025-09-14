@@ -2,8 +2,8 @@
 #include "pico/stdlib.h"
 #include "pwm.h"
 
-#define PERIOD 4095
-#define DIVISOR 20
+#define PERIOD 1024
+#define DIVISOR 81
 
 void configurePwm (uint8_t pin) // Configura o pino PWM com uma frequencia de 1500hz e um periodo de 4095
 {
